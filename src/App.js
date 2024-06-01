@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate(new Date());
+    }, 1000); // Update every second
+    return () => clearInterval(interval); // Cleanup function
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="month">{date.toLocaleDateString("en-US", { month: "long" })}</div>
+      <div className="weekday">{date.toLocaleDateString("en-US", { weekday: "long" })}</div>
+      <div className="day">{date.getDate()}</div>
+      <div className="year">{date.getFullYear()}</div>
     </div>
   );
 }
